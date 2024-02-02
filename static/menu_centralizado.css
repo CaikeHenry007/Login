@@ -1,0 +1,12 @@
+body {
+    min-width: 320px;
+    min-height: 240px;
+    background-color: #004891;
+    margin: 0px auto;
+    padding: 0px auto;
+    border: 2px solid rgb(228, 109, 11);
+    border-radius: 5vw;
+    font-size: 24px;
+    padding-top: 50px;
+    /* height: 100vh; */
+}
