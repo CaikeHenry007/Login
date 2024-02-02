@@ -59,6 +59,11 @@ app.get('/login', (req, res) => {
     res.render('pages/login', { req: req });
 });
 
+// Rota para a página de cadastrar post
+app.get('/cadastrar_posts', (req, res) => {
+    res.render('pages/cadastrar_posts', { req: req});
+});
+
 app.get('/about', (req, res) => {
     res.render('pages/about', { req: req })
 });
@@ -79,6 +84,26 @@ app.post('/login', (req, res) => {
         } else {
             // res.send('Credenciais incorretas. <a href="/">Tente novamente</a>');
             res.redirect('/login_failed');
+        }
+    });
+});
+
+// Rota para processar o formulário de cadastrar posts
+app.post('/cadastrar_posts', (req, res) => {
+    const { Titulo, Conteudo } = req.body;
+
+    // const query = 'SELECT * FROM users WHERE username = ? AND password = SHA1(?)';
+    const query = 'INSERT INTO posts (Titulo, Conteudo, Autor, Data_postagem) VALUES (?, ?)';
+
+    db.query(query, [Titulo, Conteudo], (err, results) => {
+        if (err) throw err;
+
+        if (results.length > 0) {
+            console.log('Postagem feita com sucesso!')
+           res.redirect('/');
+        } else {
+            // res.send('Credenciais incorretas. <a href="/">Tente novamente</a>');
+            res.send('Cadastro de post não efetuado');
         }
     });
 });
@@ -125,6 +150,8 @@ app.post('/cadastrar', (req, res) => {
         }
     });
 });
+
+
 
 app.get('/register_failed', (req, res) => {
     res.render('pages/register_failed', { req: req });
